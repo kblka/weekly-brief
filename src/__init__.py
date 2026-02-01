@@ -1,0 +1,1 @@
+"""Sunday Weekly Brief automation."""

@@ -1,0 +1,27 @@
+# Credentials and secrets
+credentials.json
+token.json
+.env
+
+# Output
+output/
+*.mp3
+*.wav
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
