@@ -5,8 +5,8 @@ Automated weekly calendar brief delivered as a private audio file you can listen
 ## What it does
 
 1. **Fetches** events from your Google Calendar(s) for the next 7 days (Monday–Sunday)
-2. **Summarizes** them in 2–4 clear spoken sentences (under 150 words)
-3. **Converts** the summary to speech (MP3, under 90 seconds)
+2. **Summarizes** them in 2–4 natural spoken sentences (under 150 words). In Czech mode, uses Google Gemini to infer event types (birthday, cinema, doctor, etc.) and phrase naturally.
+3. **Converts** the summary to speech (MP3, under 90 seconds) in Czech or English
 4. **Delivers** via private RSS feed (add once in Spotify) or manual upload to Spotify for Podcasters
 
 ## Quick start
@@ -87,7 +87,9 @@ Replace `YOU` and `/path/to/venv` with your paths.
 | Variable | Description |
 |----------|-------------|
 | `CALENDAR_IDS` | Comma-separated calendar IDs (default: `primary`) |
-| `TIMEZONE` | Timezone for event display (e.g. `America/New_York`) |
+| `TIMEZONE` | Timezone for event display (e.g. `Europe/Prague`) |
+| `LANGUAGE` | `cs` (Czech) or `en` (English). Default: `cs`. |
+| `GEMINI_API_KEY` | Google Gemini API key for natural Czech summaries. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Leave empty for template-based summary. |
 | `RSS_BASE_URL` | Base URL for RSS/MP3 hosting (optional; leave empty for manual upload only) |
 
 ## TTS credentials
@@ -125,6 +127,7 @@ In the repo: **Settings → Secrets and variables → Actions → Secrets → Ne
 | `CREDENTIALS_JSON` | Entire contents of your `credentials.json` (Calendar OAuth client). |
 | `TOKEN_JSON`       | Entire contents of your `token.json` (from the project root after you’ve run the script once locally). |
 | `ADC_JSON`         | Entire contents of your Application Default Credentials file. On Mac: `~/.config/gcloud/application_default_credentials.json`. Copy the whole JSON (for TTS in the cloud). |
+| `GEMINI_API_KEY`   | Your Google Gemini API key. Get a free key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey). Required for natural Czech summaries. |
 
 To copy the ADC file:  
 `cat ~/.config/gcloud/application_default_credentials.json | pbcopy` (then paste into the secret value).
@@ -168,4 +171,4 @@ The workflow runs automatically every **Sunday at 8:00 UTC** (9:00 CET; adjust t
 - **TTS fails:** Ensure Cloud Text-to-Speech API is enabled and ADC or `GOOGLE_APPLICATION_CREDENTIALS` is set.
 - **Summary too long:** The summarizer caps at 150 words and 4 sentences; adjust in `src/summarizer.py` if needed.
 - **RSS not updating:** Ensure `RSS_BASE_URL` is set and the `output/` folder (including `feed.xml`) is served at that URL.
-- **GitHub Action fails:** Check the Actions run log. Common causes: missing or invalid secrets (`CREDENTIALS_JSON`, `TOKEN_JSON`, `ADC_JSON`); wrong or empty `CALENDAR_IDS` / `TIMEZONE` variables; Calendar or TTS API not enabled in the Google Cloud project.
+- **GitHub Action fails:** Check the Actions run log. Common causes: missing or invalid secrets (`CREDENTIALS_JSON`, `TOKEN_JSON`, `ADC_JSON`, `GEMINI_API_KEY`); wrong or empty `CALENDAR_IDS` / `TIMEZONE` variables; Calendar or TTS API not enabled in the Google Cloud project.

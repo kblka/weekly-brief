@@ -78,7 +78,11 @@ def run_pipeline(
 
     # Phase 2: Summary
     log.info("Phase 2: Generating summary")
-    summary = generate_summary(events)
+    summary = generate_summary(
+        events,
+        gemini_api_key=config.GEMINI_API_KEY,
+        language=config.LANGUAGE,
+    )
     summary_path = save_summary(summary, config.OUTPUT_DIR, date_str)
     log.info(f"Saved summary to {summary_path}")
 
@@ -86,7 +90,12 @@ def run_pipeline(
     log.info("Phase 3: Converting to speech")
     mp3_path = config.OUTPUT_DIR / f"weekly-brief-{date_str}.mp3"
     config.OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    synthesize_to_file(summary, mp3_path)
+    synthesize_to_file(
+        summary,
+        mp3_path,
+        voice_name=config.TTS_VOICE,
+        language_code=config.TTS_LANG,
+    )
     log.info(f"Saved audio to {mp3_path}")
 
     # Phase 4: RSS (optional)
