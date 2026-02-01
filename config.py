@@ -18,7 +18,7 @@ CALENDAR_IDS = [
     for cid in os.getenv("CALENDAR_IDS", "primary").split(",")
     if cid.strip()
 ]
-TIMEZONE = os.getenv("TIMEZONE", "America/New_York")
+TIMEZONE = (os.getenv("TIMEZONE") or "America/New_York").strip() or "America/New_York"
 
 # RSS
 RSS_BASE_URL = os.getenv("RSS_BASE_URL", "").rstrip("/")

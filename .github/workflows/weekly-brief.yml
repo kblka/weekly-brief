@@ -44,7 +44,7 @@ jobs:
         run: |
           REPO_NAME="${GITHUB_REPOSITORY#*/}"
           echo "CALENDAR_IDS=${{ vars.CALENDAR_IDS }}" >> .env
-          echo "TIMEZONE=${{ vars.TIMEZONE }}" >> .env
+          echo "TIMEZONE=${{ vars.TIMEZONE || 'Europe/Prague' }}" >> .env
           echo "RSS_BASE_URL=https://${{ github.repository_owner }}.github.io/${REPO_NAME}/output" >> .env
 
       - name: Install dependencies
