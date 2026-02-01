@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>My Weekly Brief</title>
+    <description>A private weekly brief of your upcoming calendar events.</description>
+    <link>https://kblka.github.io/weekly-brief/output</link>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Feb 2026 19:43:50 GMT</lastBuildDate>
+    <generator>Sunday Weekly Brief</generator>
+    <item>
+      <title>Weekly Brief 2026-02-02</title>
+      <description>Weekly brief for the week of 2026-02-02.</description>
+      <pubDate>Mon, 02 Feb 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="false">weekly-brief-2026-02-02</guid>
+      <enclosure url="https://kblka.github.io/weekly-brief/output/weekly-brief-2026-02-02.mp3" type="audio/mpeg" length="97344"/>
+    </item>
+  </channel>
+</rss>
