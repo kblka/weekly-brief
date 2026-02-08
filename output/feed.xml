@@ -5,8 +5,15 @@
     <description>A private weekly brief of your upcoming calendar events.</description>
     <link>https://kblka.github.io/weekly-brief/output</link>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Feb 2026 20:29:57 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 08:25:58 GMT</lastBuildDate>
     <generator>Sunday Weekly Brief</generator>
+    <item>
+      <title>Weekly Brief 2026-02-09</title>
+      <description>Weekly brief for the week of 2026-02-09.</description>
+      <pubDate>Mon, 09 Feb 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="false">weekly-brief-2026-02-09</guid>
+      <enclosure url="https://kblka.github.io/weekly-brief/output/weekly-brief-2026-02-09.mp3" type="audio/mpeg" length="144384"/>
+    </item>
     <item>
       <title>Weekly Brief 2026-02-02</title>
       <description>Weekly brief for the week of 2026-02-02.</description>
