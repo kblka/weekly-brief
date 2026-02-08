@@ -102,6 +102,7 @@ def get_next_week_events(
             - end (datetime)
             - calendar_id (str)
             - is_all_day (bool)
+            - creator_email (str, optional)
     """
     svc = service or get_calendar_service()
     start_dt, end_dt = _next_week_range(timezone_str)
@@ -147,6 +148,10 @@ def get_next_week_events(
                 end_parsed = end_parsed.replace(tzinfo=tz)
                 is_all_day = True
 
+            # Extract creator email if available
+            creator = ev.get("creator", {})
+            creator_email = creator.get("email", "")
+            
             all_events.append(
                 {
                     "summary": ev.get("summary", "(No title)"),
@@ -154,6 +159,7 @@ def get_next_week_events(
                     "end": end_parsed,
                     "calendar_id": cal_id,
                     "is_all_day": is_all_day,
+                    "creator_email": creator_email,
                 }
             )
 

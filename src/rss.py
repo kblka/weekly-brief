@@ -30,6 +30,7 @@ def generate_rss_feed(
     base_url: str,
     show_title: str = "My Weekly Brief",
     show_description: str = "A private weekly brief of your upcoming calendar events.",
+    image_url: str | None = None,
 ) -> Path:
     """
     Generate RSS feed XML for podcast episodes.
@@ -60,6 +61,14 @@ def generate_rss_feed(
     ET.SubElement(channel, "title").text = show_title
     ET.SubElement(channel, "description").text = show_description
     ET.SubElement(channel, "link").text = base_url
+    ITUNES_NS = "http://www.itunes.com/dtds/podcast-1.0.dtd"
+    if image_url:
+        img = ET.SubElement(channel, f"{{{ITUNES_NS}}}image", attrib={"href": image_url})
+        # Also add standard image for broader compatibility
+        img_elem = ET.SubElement(channel, "image")
+        ET.SubElement(img_elem, "url").text = image_url
+        ET.SubElement(img_elem, "title").text = show_title
+    ET.SubElement(channel, f"{{{ITUNES_NS}}}explicit").text = "no"
     ET.SubElement(channel, "language").text = "en-us"
     ET.SubElement(channel, "lastBuildDate").text = now
     ET.SubElement(channel, "generator").text = "Sunday Weekly Brief"
@@ -150,10 +159,12 @@ def append_episode_to_feed(
     # Sort by date descending (newest first)
     episodes.sort(key=lambda e: e["date_str"], reverse=True)
 
+    image_url = f"{base_url.rstrip('/')}/cover.png" if base_url else None
     return generate_rss_feed(
         episodes=episodes,
         output_path=feed_path,
         base_url=base_url,
         show_title=show_title,
         show_description=show_description,
+        image_url=image_url,
     )

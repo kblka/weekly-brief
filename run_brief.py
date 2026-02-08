@@ -101,6 +101,10 @@ def run_pipeline(
     # Phase 4: RSS (optional)
     if config.RSS_BASE_URL and not skip_rss:
         log.info("Phase 4: Updating RSS feed")
+        cover_src = config.PROJECT_ROOT / "cover.png"
+        if cover_src.exists():
+            import shutil
+            shutil.copy(cover_src, config.OUTPUT_DIR / "cover.png")
         feed_path = config.OUTPUT_DIR / "feed.xml"
         append_episode_to_feed(
             date_str=date_str,

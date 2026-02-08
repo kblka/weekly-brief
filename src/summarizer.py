@@ -22,8 +22,8 @@ DAY_NAMES_CS = [
     "Pátek", "Sobota", "Neděle",
 ]
 
-MAX_WORDS = 150
-MAX_SENTENCES = 6  # Allow more sentences for natural flow
+MAX_WORDS = 450
+MAX_SENTENCES = 18  # Allow more sentences for natural flow
 
 
 def _format_time_czech(dt: datetime, is_all_day: bool) -> str:
@@ -83,7 +83,9 @@ def _events_to_prompt_text(events, day_names, time_fmt_czech=True):
                 else ("celý den" if ev.get("is_all_day", False) else _format_time_simple(ev["start"]))
             )
             title = ev.get("summary", "(bez názvu)")
-            lines.append(f"- {day} {time_str}: {title}")
+            creator_email = ev.get("creator_email", "")
+            creator_info = f" [založeno: {creator_email}]" if creator_email else ""
+            lines.append(f"- {day} {time_str}: {title}{creator_info}")
     return "\n".join(lines) if lines else ""
 
 
@@ -109,11 +111,16 @@ PRAVIDLA:
 2. Odhadni typ události z názvu a vyjádři přirozeně: narozeniny → "máte narozeninovou oslavu", kino → "jdete do kina", lékař/doktor → "návštěva u lékaře", pub quiz → "jdete na pub quiz", rodina → "rodinná akce" atd.
 3. Časy: "v 10 hodin", "odpoledne ve 2", "celý den" – českým mluveným stylem.
 4. Začněte větami jako "V pondělí…", "V úterý…", "Ve středu vás čeká…", "V pátek máte…".
-5. Max 150 slov, 4–6 vět. Piš plynule, jako by vám někdo vyprávěl o vašem týdnu.
-6. Vygeneruj POUZE text (žádné uvozovky, žádný úvod ani závěr).
+5. U každé události VŽDY uveď, kdo ji založil, ale jazykově to obměňuj:
+   - Pokud [založeno: kabelkape@gmail.com] → zmíň Kabise (např. "to si tam dal Kabis", "Kabis si to naplánoval", "podle Kabise", "Kabis to založil")
+   - Pokud [založeno: mariana.smidova1@gmail.com] → zmíň Mari (např. "to si tam dala Mari", "Mari to naplánovala", "podle Mari", "Mari to založila")
+   - Obměňuj formulace, aby to znělo přirozeně a neopakovalo se
+   - U ostatních emailů tvůrce nevypisuj
+6. Max 450 slov, 12–18 vět. Piš plynule, jako by vám někdo vyprávěl o vašem týdnu.
+7. Vygeneruj POUZE text (žádné uvozovky, žádný úvod ani závěr).
 
 PŘÍKLAD dobrého výstupu:
-V pondělí vás v 10 hodin čeká návštěva u lékaře. V úterý odpoledne jdete do kina. Ve středu máte celý den rodinnou oslavu narozenin.
+V pondělí vás v 10 hodin čeká návštěva u lékaře, to si tam dal Kabis. V úterý odpoledne jdete do kina podle Mari. Ve středu máte celý den rodinnou oslavu narozenin, Mari to naplánovala.
 
 Události:
 {event_text}
