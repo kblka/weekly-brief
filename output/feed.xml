@@ -1,11 +1,17 @@
 <?xml version="1.0" ?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:ns0="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
     <title>My Weekly Brief</title>
     <description>A private weekly brief of your upcoming calendar events.</description>
     <link>https://kblka.github.io/weekly-brief/output</link>
+    <ns0:image href="https://kblka.github.io/weekly-brief/output/cover.png"/>
+    <image>
+      <url>https://kblka.github.io/weekly-brief/output/cover.png</url>
+      <title>My Weekly Brief</title>
+    </image>
+    <ns0:explicit>no</ns0:explicit>
     <language>en-us</language>
-    <lastBuildDate>Sun, 08 Feb 2026 13:03:51 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 08 Feb 2026 13:19:50 GMT</lastBuildDate>
     <generator>Sunday Weekly Brief</generator>
     <item>
       <title>Weekly Brief 2026-02-09</title>
