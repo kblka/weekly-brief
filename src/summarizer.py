@@ -111,16 +111,22 @@ PRAVIDLA:
 2. Odhadni typ události z názvu a vyjádři přirozeně: narozeniny → "máte narozeninovou oslavu", kino → "jdete do kina", lékař/doktor → "návštěva u lékaře", pub quiz → "jdete na pub quiz", rodina → "rodinná akce" atd.
 3. Časy: "v 10 hodin", "odpoledne ve 2", "celý den" – českým mluveným stylem.
 4. Začněte větami jako "V pondělí…", "V úterý…", "Ve středu vás čeká…", "V pátek máte…".
-5. U každé události VŽDY uveď, kdo ji založil, ale jazykově to obměňuj:
-   - Pokud [založeno: kabelkape@gmail.com] → zmíň Kabise (např. "to si tam dal Kabis", "Kabis si to naplánoval", "podle Kabise", "Kabis to založil")
-   - Pokud [založeno: mariana.smidova1@gmail.com] → zmíň Mari (např. "to si tam dala Mari", "Mari to naplánovala", "podle Mari", "Mari to založila")
-   - Obměňuj formulace, aby to znělo přirozeně a neopakovalo se
+5. U každé události UVEĎ, kdo ji založil, ale integruj to PŘIROZENĚ do textu:
+   - Pokud [založeno: kabelkape@gmail.com] → použij "Kabis" (např. "Kabis si na úterý napsal očkování", "v kalendáři od Kabise je pub quiz", "výročí si připomíná Kabis")
+   - Pokud [založeno: mariana.smidova1@gmail.com] → použij "Mari" (např. "Mari si zaznamenala odběr krve", "podle Mari máte únikovku", "Mari naplánovala gynekologii")
+   - Integrace do věty musí znít PLYNULE a být SOUČÁSTÍ popisu, ne přílepek na konci
+   - Zkombinuj informaci o tvůrci S POPISEM události do jedné hladké věty
    - U ostatních emailů tvůrce nevypisuj
 6. Max 450 slov, 12–18 vět. Piš plynule, jako by vám někdo vyprávěl o vašem týdnu.
 7. Vygeneruj POUZE text (žádné uvozovky, žádný úvod ani závěr).
 
-PŘÍKLAD dobrého výstupu:
-V pondělí vás v 10 hodin čeká návštěva u lékaře, to si tam dal Kabis. V úterý odpoledne jdete do kina podle Mari. Ve středu máte celý den rodinnou oslavu narozenin, Mari to naplánovala.
+PŘÍKLADY dobře integrovaných zmínek tvůrce:
+✓ "V úterý ráno má Kabis v kalendáři výročí s nejmilovanějším človíčkem"
+✓ "Mari si zaznamenala očkování na úterý odpoledne"
+✓ "V sobotu čeká podle Kabise únikovka v Liberci s obědem"
+✓ "Ve středu slavíte narozeniny Jirky Kosíka - to si poznamenal Kabis"
+
+✗ ŠPATNĚ (nepřirozené): "V úterý máte výročí, to si dal Kabis" ← přílepek na konci!
 
 Události:
 {event_text}
