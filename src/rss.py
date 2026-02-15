@@ -8,6 +8,7 @@ Add RSS URL in Spotify: Settings → Add podcast by RSS.
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
+from typing import Dict, List, Optional
 from xml.dom import minidom
 
 
@@ -25,12 +26,12 @@ def _escape_xml(s: str) -> str:
 
 
 def generate_rss_feed(
-    episodes: list[dict],
+    episodes: List[Dict],
     output_path: Path,
     base_url: str,
     show_title: str = "My Weekly Brief",
     show_description: str = "A private weekly brief of your upcoming calendar events.",
-    image_url: str | None = None,
+    image_url: Optional[str] = None,
 ) -> Path:
     """
     Generate RSS feed XML for podcast episodes.
