@@ -3,38 +3,70 @@ Phase 1: Google Calendar access.
 
 Fetches events from selected calendars for the next 7 days
 (Monday 00:00 to Sunday 23:59).
+
+Supports two authentication methods:
+1. Service Account (preferred) - never expires
+2. OAuth (fallback) - requires periodic re-authentication
 """
 
+import logging
 from datetime import datetime, timedelta
 from pathlib import Path
 import zoneinfo
 
 from google.auth.transport.requests import Request
+from google.oauth2 import service_account
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+
+log = logging.getLogger(__name__)
 
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
 # Default paths (can be overridden)
 _CREDENTIALS_PATH = Path(__file__).resolve().parent.parent / "credentials.json"
 _TOKEN_PATH = Path(__file__).resolve().parent.parent / "token.json"
+_SERVICE_ACCOUNT_PATH = Path(__file__).resolve().parent.parent / "service-account.json"
 
 
-def get_calendar_service(credentials_path=None, token_path=None):
+def get_calendar_service(credentials_path=None, token_path=None, service_account_path=None):
     """
     Build an authenticated Google Calendar API service.
 
-    On first run, opens browser for OAuth consent and stores token.
+    Authentication priority:
+    1. Service Account (if service-account.json exists) - never expires
+    2. OAuth (fallback) - requires periodic re-authentication
+
+    Args:
+        credentials_path: Path to OAuth credentials.json (optional)
+        token_path: Path to OAuth token.json (optional)
+        service_account_path: Path to service-account.json (optional)
+
+    Returns:
+        Authenticated Calendar API service
     """
+    sa_path = service_account_path or _SERVICE_ACCOUNT_PATH
     creds_path = credentials_path or _CREDENTIALS_PATH
     tok_path = token_path or _TOKEN_PATH
 
+    # Priority 1: Try Service Account (preferred method)
+    if sa_path.exists():
+        log.info("Using Service Account authentication (service-account.json)")
+        creds = service_account.Credentials.from_service_account_file(
+            str(sa_path), scopes=SCOPES
+        )
+        return build("calendar", "v3", credentials=creds)
+
+    # Priority 2: Fall back to OAuth
+    log.info("Service account not found, using OAuth authentication")
+    
     if not creds_path.exists():
         raise FileNotFoundError(
-            f"credentials.json not found at {creds_path}. "
-            "Download OAuth client credentials from Google Cloud Console "
-            "(APIs & Services → Credentials → Create OAuth client ID → Desktop app)."
+            f"No authentication found. Either:\n"
+            f"1. Add service-account.json (recommended), OR\n"
+            f"2. Add credentials.json from Google Cloud Console "
+            f"(APIs & Services → Credentials → Create OAuth client ID → Desktop app)."
         )
 
     creds = None

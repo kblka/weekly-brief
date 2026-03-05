@@ -23,15 +23,29 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Create credentials.json
+      - name: Create service account credentials (preferred)
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -n "$SERVICE_ACCOUNT_JSON" ]; then
+            printf '%s' "$SERVICE_ACCOUNT_JSON" > service-account.json
+            echo "✓ Using Service Account authentication"
+          else
+            echo "⚠ SERVICE_ACCOUNT_JSON not set, will fall back to OAuth"
+          fi
+
+      - name: Create OAuth credentials (fallback)
         env:
           CREDENTIALS_JSON: ${{ secrets.CREDENTIALS_JSON }}
-        run: printf '%s' "$CREDENTIALS_JSON" > credentials.json
-
-      - name: Create token.json
-        env:
           TOKEN_JSON: ${{ secrets.TOKEN_JSON }}
-        run: printf '%s' "$TOKEN_JSON" > token.json
+        run: |
+          if [ ! -f service-account.json ]; then
+            printf '%s' "$CREDENTIALS_JSON" > credentials.json
+            printf '%s' "$TOKEN_JSON" > token.json
+            echo "✓ Using OAuth authentication"
+          else
+            echo "⊘ Skipping OAuth setup (using Service Account)"
+          fi
 
       - name: Create Application Default Credentials for TTS
         env:

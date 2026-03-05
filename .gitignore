@@ -1,6 +1,8 @@
 # Credentials and secrets
 credentials.json
 token.json
+service-account.json
+adc.json
 .env
 
 # Output
